@@ -1,0 +1,41 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: instance
+    image: docker:stable-dind
+    command: /usr/local/bin/dockerd-entrypoint.sh
+    privileged: True
+    tty: True
+    interactive: True
+    detach: True
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    options:
+      x: ["204"]
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - dependency
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy

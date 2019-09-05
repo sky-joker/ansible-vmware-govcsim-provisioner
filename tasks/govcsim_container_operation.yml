@@ -1,0 +1,29 @@
+---
+- name: govcsim container operation.
+  docker_container:
+    name: vcsim
+    image: "{{ govcsim_image }}"
+    interactive: true
+    tty: true
+    detach: true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5000:5000"
+      - "8080:8080"
+      - "8989:8989"
+    state: "{{ state }}"
+  register: govcsim_operation_result
+
+- block:
+    - name: flask status check.
+      uri:
+        url: http://127.0.0.1:5000/
+      register: flask_status_result
+      ignore_errors: true
+
+    - name: status check.
+      assert:
+        fail_msg: "{{ flask_status_result.msg }}"
+        that: flask_status_result.status == 200
+  when: govcsim_operation_result.container.State.Running is sameas true

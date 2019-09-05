@@ -1,0 +1,14 @@
+---
+- name: govcsim provisioning.
+  hosts: all
+  roles:
+    - role: ansible-vmware-govcsim-provisioner
+      vars:
+        state: started
+
+- name: delete govcsim.
+  hosts: all
+  roles:
+    - role: ansible-vmware-govcsim-provisioner
+      vars:
+        state: absent

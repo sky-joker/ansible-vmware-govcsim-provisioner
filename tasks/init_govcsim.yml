@@ -1,0 +1,39 @@
+---
+# yamllint disable rule:line-length
+- name: killall govcsim.
+  uri:
+    url: http://127.0.0.1:5000/killall
+  register: killall_govcsim_result
+  ignore_errors: true
+
+- name: status check.
+  assert:
+    fail_msg: "{{ killall_govcsim_result.msg }}"
+    that:
+      - killall_govcsim_result.status == 200
+
+- name: starte up govcsim.
+  uri:
+    url: "http://127.0.0.1:5000/spawn?app={{ app }}&cluster={{ cluster }}&dc={{ dc }}&ds={{ ds }}&folder={{ folder }}&host={{ host }}&pg={{ pg }}&pod={{ pod }}&pool={{ pool }}&vm={{ vm }}"
+  register: starte_up_govcsim_result
+  ignore_errors: true
+
+- name: status check.
+  assert:
+    fail_msg: "{{ starte_up_govcsim_result.msg }}"
+    that:
+      - killall_govcsim_result.status == 200
+
+- name: govcsim status check.
+  uri:
+    url: http://127.0.0.1:5000/govc_find
+  register: govcsim_status_check_result
+  ignore_errors: true
+
+- name: status check.
+  assert:
+    fail_msg: "{{ govcsim_status_check_result.json.0 }}"
+    that:
+      - govcsim_status_check_result.json.0 is not regex("connection refused")
+
+- debug: var=starte_up_govcsim_result.json

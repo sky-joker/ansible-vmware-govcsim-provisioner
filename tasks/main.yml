@@ -1,0 +1,7 @@
+---
+- name: import govcsim container operation task.
+  import_tasks: govcsim_container_operation.yml
+
+- name: import init govcsim task.
+  import_tasks: init_govcsim.yml
+  when: state == "started"
