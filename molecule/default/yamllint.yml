@@ -2,4 +2,4 @@
 extends: default
 ignore: |
   .travis.yml
-  meta/main.yml
+  meta/
