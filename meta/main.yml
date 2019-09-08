@@ -1,0 +1,17 @@
+galaxy_info:
+  author: sky-joker
+  description: Provisioning Roles for vcsim Created in Go Language
+
+  license: MIT
+
+  min_ansible_version: 2.8.0
+
+  platforms:
+    - name: CentOS
+      versions:
+        - all
+
+  galaxy_tags:
+    - vmware
+
+# dependencies: []
