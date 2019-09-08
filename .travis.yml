@@ -2,6 +2,10 @@ language: python
 services:
   - docker
 
+before_install:
+  - pip install molecule
+  - pip install molecule[docker]
+
 jobs:
   include:
     - stage: role test
