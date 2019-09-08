@@ -1,0 +1,10 @@
+language: python
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: role test
+      name: govcsim provisioner role test
+      python: 3.6
+      script: molecule test
