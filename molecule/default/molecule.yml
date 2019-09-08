@@ -11,10 +11,10 @@ platforms:
   - name: instance
     image: docker:stable-dind
     command: /usr/local/bin/dockerd-entrypoint.sh
-    privileged: True
-    tty: True
-    interactive: True
-    detach: True
+    privileged: true
+    tty: true
+    interactive: true
+    detach: true
 provisioner:
   name: ansible
   lint:
